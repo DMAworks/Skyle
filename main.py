@@ -33,16 +33,14 @@ def respond(output):
     playsound.playsound(file, True)
     os.remove(file)
 
+webbrowser.register('edge', None, webbrowser.BackgroundBrowser(
+    "C://Program Files (x86)//Microsoft//Edge//Application//msedge.exe"))
+webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(
+    "C://Program Files (x86)//Google//Chrome//Application//chrome.exe"))
 
 if __name__ == '__main__':
-    respond("Приветствую сэр")
-
-    webbrowser.register('edge', None, webbrowser.BackgroundBrowser(
-        "C://Program Files (x86)//Microsoft//Edge//Application//msedge.exe"))
-    webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(
-        "C://Program Files (x86)//Google//Chrome//Application//chrome.exe"))
-
-    while (1):
+    print("Распознаю...")
+    while 1:
         text = talk().lower()
 
         if text == 0:
@@ -58,11 +56,10 @@ if __name__ == '__main__':
                 if text == 0:
                     continue
 
-                if "стоп" in str(text) or "пока" in str(text) or "уйди" in str(text):
-                    respond("Всего наилучшего сэр!")
-                    break
 
-                if "найди в википедии" in text:
+                if "привет" in text or "здарова" in text:
+                    respond("Приветствую сэр!")
+                elif "найди в википедии" in text:
                     respond('ищу в википедии')
                     text = text.split("найди в википедии ")[-1]
                     print(text)
@@ -71,27 +68,33 @@ if __name__ == '__main__':
                     respond("вот что я нашла")
                     print(results)
                     respond(results)
-
                 elif 'сколько время' in text:
                     strTime = datetime.datetime.now().strftime("%H:%M:%S")
                     respond(f"сейчас время {strTime}")
-
                 elif 'найди' in text:
                     text = text.split("найди ")[-1]
                     webbrowser.open_new_tab(text)
-
                 elif 'google' in text or 'гугл' in text:
                     webbrowser.get('edge').open_new_tab("https://www.google.com")
                     respond("открываю google")
-
                 elif 'youtube' in text:
                     webbrowser.get('edge').open_new_tab("https://www.youtube.com")
                     respond("открываю youtube")
-
                 elif "word" in text:
                     respond("открываю Microsoft Word")
                     os.startfile("C://Program Files (x86)//Microsoft Office//root//Office16//WINWORD.EXE")
-
+                elif "excel" in text:
+                    respond("открываю Microsoft Excel")
+                    os.startfile('C://Program Files (x86)//Microsoft Office//root//Office16//EXCEL.EXE')
+                elif "one note" in text or "onenote" in text or "ван нот" in text:
+                    respond("открываю Microsoft One Note")
+                    os.system("explorer.exe shell:appsFolder\Microsoft.Office.OneNote_8wekyb3d8bbwe!microsoft.onenoteim")
+                elif "что надо сделать" in text or "задачи" in text or "задач" in text:
+                    respond("открываю список задач")
+                    os.system("explorer.exe shell:appsFolder\Microsoft.Todos_8wekyb3d8bbwe!App")
+                elif "стоп" in str(text) or "пока" in str(text) or "уйди" in str(text):
+                    respond("Всего наилучшего сэр!")
+                    break
                 else:
                     respond("не поняла вопроса")
                     print("Повторите, пожалуйста")
